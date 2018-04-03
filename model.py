@@ -103,9 +103,9 @@ for i in range(10):
     m = load_model()
     models.append(m)
 
-eval_batch_size = 512
+eval_batch_size = 100
 all_preds = np.stack([m.model.predict(x_test, batch_size=eval_batch_size) for m in models])
 avg_preds = all_preds.mean(axis=0)
-(1 - keras.metrics.categorical_accuracy(test_labels, avg_preds).eval().mean()) * 100
+print((1 - keras.metrics.categorical_accuracy(test_labels, avg_preds).eval().mean()) * 100)
 
 
