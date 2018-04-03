@@ -25,48 +25,49 @@ from keras.layers import Flatten, Lambda, BatchNormalization
 from keras.models import Sequential
 from keras.optimizers import Adam as Adam
 from keras.layers.advanced_activations import LeakyReLU
+from keras.preprocessing.image import ImageDataGenerator
 #######################################################################
 #   THIS IS HERE TO PREVENT A TENSORFLOW ERROR
 from keras import backend as K
 K.set_image_dim_ordering('th')
 #######################################################################
 #   nist.gov/itl/iad/image-group/emnist-dataset
-#data = io.loadmat("./emnist-letters.mat")
+#datas = io.loadmat("./emnist-letters.mat")
 #######################################################################
+data = io.loadmat("./emnist-letters.mat")
+# train labels and data
+x_train = data["dataset"][0][0][0][0][0][0].astype(np.float32)
+train_labels = data["dataset"][0][0][0][0][0][1]
+# testing labels and data
+x_test = data["dataset"][0][0][1][0][0][0].astype(np.float32)
+test_labels = data["dataset"][0][0][1][0][0][1]
+
+x_train /=  255
+x_test /= 255      
+# reshape vector
+x_train  = x_train.reshape(x_train.shape[0], 1, 28, 28, order="A")
+x_test = x_test.reshape(x_test.shape[0], 1, 28, 28, order="A")
+# this fixes an error 
+train_labels = train_labels - 1
+test_labels = test_labels - 1
+
+
+def normalize (x):
+    # print('normalized')
+    return (x - x_train.mean().astype(np.float32)) / x_train.std().astype(np.float32)
+
+
 class load_model ():
-    
-    def __init__(self):
-        self.data = io.loadmat("./emnist-letters.mat")
-        # train labels and data
-        self.x_train = self.data["dataset"][0][0][0][0][0][0].astype(np.float32)
-        self.train_labels = self.data["dataset"][0][0][0][0][0][1]
-        # testing labels and data
-        self.x_test = self.data["dataset"][0][0][1][0][0][0].astype(np.float32)
-        self.test_labels = self.data["dataset"][0][0][1][0][0][1]
+
+    def __init__ (self):
         self.model = Sequential()
-        print("model initialized")
-    def mod_data (self):
-        self.x_train /=  255
-        self.x_test /= 255
+        self.modelize()
+        self.compile()
 
-        # reshape vector
-        self.x_train  = self.x_train.reshape(self.x_train.shape[0], 1, 28, 28, order="A")
-        self.x_test = self.x_test.reshape(self.x_test.shape[0], 1, 28, 28, order="A")
-
-        # this fixes an error 
-
-        self.train_labels = self.train_labels - 1
-        self.test_labels = self.test_labels - 1 
-        print('data moded')
-    
-    def normalize (self, x):
-        print('normalized')
-        return (x - self.x_train.mean().astype(np.float32)) / self.x_train.std().astype(np.float32)
-    
     def modelize (self):
         # this will abstract the MNIST for experts
         # this will go through and normalize our inputs using built in Lambda
-        self.model.add(Lambda(self.normalize,  input_shape=(1,28,28), output_shape=(1,28,28)))
+        self.model.add(Lambda(normalize,  input_shape=(1,28,28), output_shape=(1,28,28)))
         # 1st layer convolution 
         self.model.add(Conv2D(32, (5,5)))
         self.model.add(LeakyReLU())
@@ -84,18 +85,27 @@ class load_model ():
         self.model.add(BatchNormalization())
         self.model.add(Dropout(0.2))
         self.model.add(Dense(26, activation='softmax'))
-        print('modelized')
+        # print('modelized')
 
     def compile (self) :
         self.model.compile(Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
-        print("compiled")
-    def img_process (self) :
+        # print("compiled")
+
+    def data_augment (self) :
         pass
 
-
-
         
-mod = load_model()
-mod.mod_data()
-mod.modelize()
-mod.compile()
+models = []
+weights_epoch = 0
+
+
+for i in range(10):
+    m = load_model()
+    models.append(m)
+
+eval_batch_size = 512
+all_preds = np.stack([m.model.predict(x_test, batch_size=eval_batch_size) for m in models])
+avg_preds = all_preds.mean(axis=0)
+(1 - keras.metrics.categorical_accuracy(test_labels, avg_preds).eval().mean()) * 100
+
+
