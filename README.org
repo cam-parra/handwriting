@@ -45,7 +45,11 @@
 
    https://www.nist.gov/itl/iad/image-group/emnist-dataset
 
-   We will be using the EMNIST dataset which is a subset of the MNIST dataset. 
+   We will be using the EMNIST dataset which is a subset of the MNIST dataset. Spcifically we 
+   will use the emnist-letters
+
+   #+html: <p align="center"><img src="img/graph_one.png" /></p>
+
 
 ** Tools aka requirements huge
 
