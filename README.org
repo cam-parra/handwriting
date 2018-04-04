@@ -74,15 +74,42 @@
     
 *** Keras
 
+    https://keras.io/#installation
     #+BEGIN_QUOTE
     Keras is a high-level neural networks API, written in Python and capable of
     running on top of TensorFlow, CNTK, or Theano. It was developed with a focus
-    on enabling fast experimentation. Being able to go from idea to result with
-    the least possible delay is key to doing good research.
+    on enabling fast experimentation. *Being able to go from idea to result with
+    the least possible delay is key to doing good research.*
     #+END_QUOTE
 
+   #+BEGIN_SRC 
+   pip install keras
+   #+END_SRC
    
    
+
+*** Numpy
+
+    http://www.numpy.org/
+
+    #+BEGIN_QUOTE
+    NumPy is the fundamental package for scientific computing with Python. It
+    contains among other things:
+
+    - a powerful N-dimensional array object sophisticated (broadcasting)
+    functions
+    - tools for integrating C/C++ and Fortran code
+    - useful linear algebra, Fourier transform, and random number capabilities 
+    
+    Besides its obvious scientific uses, NumPy can also be used as an efficient
+    multi-dimensional container of generic data. Arbitrary data-types can be
+    defined. This allows NumPy to seamlessly and speedily integrate with a wide
+    variety of databases.
+    #+END_QUOTE
+
+** Specific Libraries 
+
+    
    
    
 
