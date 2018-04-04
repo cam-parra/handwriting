@@ -46,15 +46,34 @@
    https://www.nist.gov/itl/iad/image-group/emnist-dataset
 
    We will be using the EMNIST dataset which is a subset of the MNIST dataset. Spcifically we 
-   will use the emnist-letters
+   will use the emnist-letters.
 
-   #+html: <p align="center"><img src="img/graph_one.png" /></p>
+#+html: <p align="center"><img src="img/graph_one.png" /></p>
+
+   As we can see we have 26 classes and about 6,000 samples for each. The data will be respresented
+   in a MATLab format.
+
+** Tools
+
+*** Python 3.5
+
+    https://www.python.org/downloads/release/python-350/
+
+*** TensorFlow
+
+    https://www.tensorflow.org/
+
+    #+BEGIN_SRC 
+
+    pip install tensorflow
+    
+    #+END_SRC
+   
+    Google's computational library that was built for machine learning and deep learning.
 
 
-** Tools aka requirements huge
-
-* Footnotes
-
+   
+   
    
    
 
