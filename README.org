@@ -1,0 +1,45 @@
+* Project Literacy
+
+** Background
+   
+   This project was made to solve a huge problem we have in our world. How do
+   we digitilize the trillions of physical documents that we have archived? Some
+   of these archives include important information such as crimminal records,
+   scientific studies, patient records, family history, etc. But unless we hired
+   the whole world we would still need several genrations to complete this task.
+
+   But the solution to this is machine learning, but to be more precise it's
+   deep learning. Deep learning is based of what we know about neurological
+   processing. In the brain we have many networks of neurons that produce an
+   "output" or result. These results are then processed by other networks and so
+   on. This is deep learning a model. The model is the brain and the layers are
+   the neural networks.
+** Problem[S]
+   
+   1. Messy
+   2. Huge data size 
+   3. Availability of Data
+   4. Splitting data.
+   
+   It is very difficult for a human to learn to read and it's the same for
+   computers. Let's face the facts, us humans are very messy and our
+   handwritting reflect that. We have thousands of ways to write the same
+   character or number.
+   
+   In this we will focus on letters since processing numbers has been succesfuly
+   accomplished. But even without numbers this leaves us a huge dataset that our
+   machine must learn from. We need thousands of examples for each letter to be
+   able to correctly learn.
+
+   
+
+  
+
+
+
+** Tools aka requirements huge
+
+   
+   
+
+   

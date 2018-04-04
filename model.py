@@ -99,13 +99,25 @@ models = []
 weights_epoch = 0
 
 
-for i in range(10):
+for i in range(5):
     m = load_model()
     models.append(m)
 
-eval_batch_size = 100
+eval_batch_size = 4096
+
+num_it = 1 
+total = 8 
+
+
+for i in range(num_it):
+    current = (i + 1) * total + weights_epoch
+    print("iteration {}, cur_epoh {}".format( i + 1, current))
+    
+    for j,m in enumerate(models):
+        m.
+
+
+
 all_preds = np.stack([m.model.predict(x_test, batch_size=eval_batch_size) for m in models])
 avg_preds = all_preds.mean(axis=0)
 print((1 - keras.metrics.categorical_accuracy(test_labels, avg_preds).eval().mean()) * 100)
-
-
