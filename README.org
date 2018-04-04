@@ -1,6 +1,9 @@
 * Project Literacy
 
+#+html: <p align="center">An Intelligent </p>
+
 ** Background
+
    
    This project was made to solve a huge problem we have in our world. How do
    we digitilize the trillions of physical documents that we have archived? Some
@@ -14,6 +17,7 @@
    "output" or result. These results are then processed by other networks and so
    on. This is deep learning a model. The model is the brain and the layers are
    the neural networks.
+
 ** Problem[S]
    
    1. Messy
@@ -31,11 +35,15 @@
    machine must learn from. We need thousands of examples for each letter to be
    able to correctly learn.
 
+   Sure there are millions of documents and handwritting examples in the world but 
+   to make these usable it would take a whole team to do. 
+
+   To be able to read documents we must be able to break words into individual letters
+   and then process those.
+
+** Dataset
+
    
-
-  
-
-
 
 ** Tools aka requirements huge
 
