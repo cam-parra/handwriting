@@ -1,6 +1,6 @@
 * Project Literacy
 
-#+html: <p align="center">An Intelligent </p>
+#+html: <p align="center">Hand Writting Recognition Using TensorFlow</p>
 
 ** Background
 
@@ -43,9 +43,13 @@
 
 ** Dataset
 
-   
+   We will be using the EMNIST[fn:1] dataset which is a subset of the MNIST dataset. 
 
 ** Tools aka requirements huge
+
+* Footnotes
+
+[fn:1] https://www.nist.gov/itl/iad/image-group/emnist-dataset
 
    
    
