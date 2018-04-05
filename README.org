@@ -107,7 +107,10 @@
     variety of databases.
     #+END_QUOTE
 
-** Specific Libraries 
+** Type of Learning [C.N.N.]
+
+   Convolution net 
+   
 
     
    
