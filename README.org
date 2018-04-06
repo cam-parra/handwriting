@@ -106,9 +106,10 @@
    learning. As the link article mentions deep learning is based on models.
    Various layers using each others output to come to a result.
 
-*** Layers 
+*** Layer
     
-    - Conv2D
+    Here 
+    - Conv2D x 2
       
       This is our 2 dimensional neural network. we specify that it will compute
       5x5 for 32 features.
@@ -126,13 +127,8 @@
 
       #+html: <p align="center"><img src="img/relu.svg"/></p>
 
-      
-
-      
-
-    
    
-   
+** Model 
 
-   
-    
+
+** finally the code 

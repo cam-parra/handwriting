@@ -43,11 +43,11 @@ x_test = data["dataset"][0][0][1][0][0][0].astype(np.float32)
 test_labels = data["dataset"][0][0][1][0][0][1]
 
 x_train /=  255
-x_test /= 255      
+x_test /= 255
 # reshape vector
 x_train  = x_train.reshape(x_train.shape[0], 1, 28, 28, order="A")
 x_test = x_test.reshape(x_test.shape[0], 1, 28, 28, order="A")
-# this fixes an error 
+# this fixes an error
 train_labels = train_labels - 1
 test_labels = test_labels - 1
 
@@ -68,7 +68,7 @@ class load_model ():
         # this will abstract the MNIST for experts
         # this will go through and normalize our inputs using built in Lambda
         self.model.add(Lambda(normalize,  input_shape=(1,28,28), output_shape=(1,28,28)))
-        # 1st layer convolution 
+        # 1st layer convolution
         self.model.add(Conv2D(32, (5,5)))
         self.model.add(LeakyReLU())
         self.model.add(BatchNormalization(axis = 1))
@@ -76,8 +76,8 @@ class load_model ():
         self.model.add(Conv2D(32, (5,5)))
         self.model.add(LeakyReLU())
         self.model.add(MaxPooling2D())
-        self.model.add(BatchNormalization(axis = 1))       
-        # more fitting 
+        self.model.add(BatchNormalization(axis = 1))
+        # more fitting
         self.model.add(Flatten())
         self.model.add(BatchNormalization())
         self.model.add(Dense(512))
@@ -94,7 +94,6 @@ class load_model ():
     def data_augment (self) :
         pass
 
-        
 models = []
 weights_epoch = 0
 
@@ -105,14 +104,13 @@ for i in range(5):
 
 eval_batch_size = 4096
 
-num_it = 1 
-total = 8 
+num_it = 1
+total = 8
 
 
 for i in range(num_it):
     current = (i + 1) * total + weights_epoch
     print("iteration {}, cur_epoh {}".format( i + 1, current))
-    
     for j,m in enumerate(models):
         m.
 
