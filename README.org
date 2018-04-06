@@ -117,9 +117,16 @@
       
       From basic machine learning we learned about the sigmoid function, an
       activation function.
-      #+html: <p align="center"><img src="img/sig.svg" /></p>
+      #+html: <p align="center"><img src="img/sig.svg"/></p>
       
-      RelU or Rectified Liniear unit acts as our activation function for our CNN.
+      RelU or Rectified Liniear unit acts as our activation function for our
+      CNN. We will not go into the LeakyRelU specification in this paper to
+      avoid getting into complex math formulas. Just know that this is an
+      aproximation of the Rectifier function.
+
+      #+html: <p align="center"><img src="img/relu.svg"/></p>
+
+      
 
       
 
