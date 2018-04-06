@@ -117,8 +117,10 @@
       
       From basic machine learning we learned about the sigmoid function, an
       activation function.
-
-#+html: <p align="center"><img src="img/sig.svg" /></p>
+    
+    #+html: <p align="center"><img src="img/sig.svg" /></p>
+      
+      RelU or Rectified Liniear unit acts as our activation function for our CNN.
 
       
 
