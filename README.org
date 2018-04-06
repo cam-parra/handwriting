@@ -41,9 +41,7 @@
    To be able to read documents we must be able to break words into individual letters
    and then process those.
 
-** Dataset
-
-   https://www.nist.gov/itl/iad/image-group/emnist-dataset
+** [[https://www.nist.gov/itl/iad/image-group/emnist-dataset][Dataset]]
 
    We will be using the EMNIST dataset which is a subset of the MNIST dataset. Spcifically we 
    will use the emnist-letters.
@@ -55,13 +53,11 @@
 
 ** Tools
 
-*** Python 3.5
+*** [[https://www.python.org/downloads/release/python-350/][Python 3.5]]
 
-    https://www.python.org/downloads/release/python-350/
 
-*** TensorFlow
+*** [[ https://www.tensorflow.org/][TensorFlow]]
 
-    https://www.tensorflow.org/
 
     Google's computational library that was built for machine learning and deep learning.
     
@@ -72,9 +68,8 @@
     #+END_SRC
    
     
-*** Keras
+*** [[https://keras.io/#installation][Keras]]
 
-    https://keras.io/#installation
     #+BEGIN_QUOTE
     Keras is a high-level neural networks API, written in Python and capable of
     running on top of TensorFlow, CNTK, or Theano. It was developed with a focus
@@ -82,15 +77,13 @@
     the least possible delay is key to doing good research.*
     #+END_QUOTE
 
-   #+BEGIN_SRC 
-   pip install keras
-   #+END_SRC
+    #+BEGIN_SRC 
+    pip install keras
+    #+END_SRC
    
    
 
-*** Numpy
-
-    http://www.numpy.org/
+*** [[http://www.numpy.org/][Numpy]]
 
     #+BEGIN_QUOTE
     NumPy is the fundamental package for scientific computing with Python. It
@@ -122,7 +115,7 @@
 
     - LeakyRelU
       
-      From basic machine learning we learned about the sigmoid function, a
+      From basic machine learning we learned about the sigmoid function, an
       activation function.
 
 #+html: <p align="center"><img src="img/sig.svg" /></p>
