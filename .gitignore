@@ -3,9 +3,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.mat
+test_errors*
 # C extensions
 *.so
-
+00*
+learning/history
+learning/weights
 # Distribution / packaging
 .Python
 env/
