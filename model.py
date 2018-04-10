@@ -27,14 +27,25 @@ from keras.optimizers import Adam as Adam
 from keras.layers.advanced_activations import LeakyReLU
 from keras.preprocessing.image import ImageDataGenerator
 #######################################################################
-#   THIS IS HERE TO PREVENT A TENSORFLOW ERROR
+#   THIS IS HERE TO PREVENT A TENSORFLOW ERROR might not be needed on different systems
 from keras import backend as K
 K.set_image_dim_ordering('th')
 #######################################################################
 #   nist.gov/itl/iad/image-group/emnist-dataset
 #datas = io.loadmat("./emnist-letters.mat")
 #######################################################################
-data = io.loadmat("./emnist-letters.mat")
+
+input_user = input("1. Letters 2. Numbers \n~----------> ")
+
+if input_user == 1:
+    data = io.loadmat("./emnist-letters.mat")
+elif input_user == 2:
+    data = io.loadmat("./emist-mnist.mat")
+else:
+    data = io.loadmat("./emnist-letters.mat")
+
+
+
 # train labels and data
 x_train = data["dataset"][0][0][0][0][0][0].astype(np.float32)
 train_labels = data["dataset"][0][0][0][0][0][1]
@@ -51,6 +62,16 @@ x_test = x_test.reshape(x_test.shape[0], 1, 28, 28, order="A")
 train_labels = train_labels - 1
 test_labels = test_labels - 1
 
+
+visu_one = input("Would you like to see a sample of your data? [Y/n]\n~----------> ")
+if visu_one == 'Y':
+    num = input("Please pick a number from 0 - 10000\n~----------> ")
+    import matplotlib.pyplot as plot
+    sample_image = x_train[int(num)]
+    plot.imshow(sample_image[0], cmap='gray')
+    plot.show()
+elif visu_one != 'Y': 
+    print("\n~~~~~~~~~~ Learning Resuming ~~~~~~~~~~\n")
 
 def normalize (x):
     # print('normalized')
@@ -108,14 +129,14 @@ num_it = 1
 total = 8
 
 
-for i in range(num_it):
-    current = (i + 1) * total + weights_epoch
-    print("iteration {}, cur_epoh {}".format( i + 1, current))
-    for j,m in enumerate(models):
-        m.
+##for i in range(num_it):
+   ## current = (i + 1) * total + weights_epoch
+    ##print("iteration {}, cur_epoh {}".format( i + 1, current))
+    ## for j,m in enumerate(models):    
 
 
 
 all_preds = np.stack([m.model.predict(x_test, batch_size=eval_batch_size) for m in models])
 avg_preds = all_preds.mean(axis=0)
+print(all_preds)
 print((1 - keras.metrics.categorical_accuracy(test_labels, avg_preds).eval().mean()) * 100)
