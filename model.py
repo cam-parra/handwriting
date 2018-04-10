@@ -42,6 +42,7 @@ if input_user == 1:
 elif input_user == 2:
     data = io.loadmat("./emist-mnist.mat")
 else:
+    print("\n\n~~~~~~~~~~ Learning Resuming ~~~~~~~~~~\n ")
     data = io.loadmat("./emnist-letters.mat")
 
 
@@ -58,21 +59,32 @@ x_test /= 255
 # reshape vector
 x_train  = x_train.reshape(x_train.shape[0], 1, 28, 28, order="A")
 x_test = x_test.reshape(x_test.shape[0], 1, 28, 28, order="A")
+print(train_labels.shape)
 # this fixes an error
-train_labels = train_labels - 1
 test_labels = test_labels - 1
+train_labels = train_labels - 1
+
+train_labels = keras.utils.to_categorical(train_labels, 26)
+test_labels = keras.utils.to_categorical(test_labels, 26)
+print(train_labels.shape)
 
 
 visu_one = input("Would you like to see a sample of your data? [Y/n]\n~----------> ")
 if visu_one == 'Y':
-    num = input("Please pick a number from 0 - 10000\n~----------> ")
+    num = int(input("Please pick a number from 0 - 10000\n~----------> "))
     import matplotlib.pyplot as plot
-    sample_image = x_train[int(num)]
+    sample_image = x_train[num]
     plot.imshow(sample_image[0], cmap='gray')
     plot.show()
+    print(train_labels[num][0])
 elif visu_one != 'Y': 
     print("\n~~~~~~~~~~ Learning Resuming ~~~~~~~~~~\n")
 
+
+############################################################
+# func: normalize 
+#
+############################################################
 def normalize (x):
     # print('normalized')
     return (x - x_train.mean().astype(np.float32)) / x_train.std().astype(np.float32)
@@ -115,11 +127,13 @@ class load_model ():
     def data_augment (self) :
         pass
 
+
+
 models = []
 weights_epoch = 0
 
 
-for i in range(5):
+for i in range(2):
     m = load_model()
     models.append(m)
 
@@ -138,5 +152,4 @@ total = 8
 
 all_preds = np.stack([m.model.predict(x_test, batch_size=eval_batch_size) for m in models])
 avg_preds = all_preds.mean(axis=0)
-print(all_preds)
 print((1 - keras.metrics.categorical_accuracy(test_labels, avg_preds).eval().mean()) * 100)
