@@ -130,6 +130,123 @@
    
 ** Model 
 
+   #+html: <p align="center"><img src="img/conv_model.png"/></p>
 
-** finally the code 
+** finally the code
+   
+   Here we load the data into a variable and then extract from it using the 
+   io matlab interface. This example shows how the data for the train set is retrieved.
+
+   #+BEGIN_SRC python
+    data = io.loadmat("./emnist-letters.mat")
+    train = data["dataset"][0][0][0][0][0][0].astype(np.float32)
+    train_labels = data["dataset"][0][0][0][0][0][1]
+   #+END_SRC
+   
+
+
+   Using the keras api we will do data augmentation. Data augmentation is meant
+   to help us out with the low number of examples that are given to us by the
+   EMNIST-Letters set. We will give it certain parameters that will either
+   rotate, flip, shear, zoom, and shift our pictures. This has proven to be
+   worth while.
+
+
+*** WARNING _DO NOT ATTEMPT IF RUNNING ON SLOWER SYSTEM_
+
+   Recommended:
+
+   32 GB of RAM
+   NVIDIA machine learning graphics card
+
+   Also if you're using a laptop, try to keep room well ventilated as laptop can become extremly hot.
+   
+   #+BEGIN_QUOTE
+   "Has someone been using the oven in here?" - unaware roommate
+   #+END_QUOTE
+   
+   _*This may take up to 16-24 hours to run completely*_
+
+   Why does this take so long?
+
+   Well if you read above, we are using ensembles to learn. This means that we are training
+   various models and then comparing to get the best result. To train these models correctly
+   we need to run epochs on every single one, and every epoch is expected to take 10-20 minutes.
+   With TensorFlow's model this could take a long time.
+
+   Now a bit of an explanation to this code. It  will use our augmented data to learn and  then 
+   make predictions.
+   
+   Behind that we will be collecting our weights for previous runs to be able to see what worked best and
+   to have a better starting point to future learning.
+
+   #+BEGIN_SRC python
+
+   for it in range(num_it):
+    epoch = (it + 1)* total + weights_epoch
+    print('\ncurrent iteration: ' + str(it) + '\ncurrent epoch: ' + str(epoch) +'\n')
+
+    for index,cur_model in enumerate(models):
+        print('I am in the second loop')
+        cur_model.model.optimizer.lr = 0.000001
+
+        trained = cur_model.model.fit_generator(all_batches,steps_per_epoch=steps, epochs=total, verbose=0,
+                            validation_data=testing, validation_steps=val_steps)
+        cur_model.model.save_weights("learning/weights/{:03d}epochs_weights_model_{}.pkl".format(epoch, index))
+    all_preds = np.stack([m.model.predict(test, batch_size=eval_batch_size) for m in models])
+    avg_preds = all_preds.mean(axis=0)
+    test_error = (1 - keras.metrics.categorical_accuracy(test_labels, avg_preds).eval().mean()) * 100
+
+    with open("learning/history/test_errors_epoch_{:03d}.txt".format(epoch), "w") as text_file:
+        print('i am in the third loop')
+        text_file.write("epoch: {} test error on ensemble: {}\n".format(epoch, test_error))
+        for m in models:
+            pred = np.array(m.predict(test, batch_size=eval_batch_size))
+            test_err = (1 - keras.metrics.categorical_accuracy(test_labels, pred).eval().mean()) * 100
+            text_file.write("{}\n".format(test_err))
+
+   #+END_SRC
+* Some results
+
+** 4 epochs
+
+   #+html: <p align="center"><img src="img/4_epochs_2_hours.png"/></p>
+
+** 16 epochs
+
+   #+html: <p align="center"><img src="img/16_epochs_6_hours.png"/></p>
+  
+
+* What I learned 
+
+
+** Data Collection
+
+   As I began this project I spent over 4 weeks trying to get to get the right
+   data. I was lead to the NIST data set and this basically gave me about 2 gigs
+   worth of pictures divided into classes. Not knowing any better I tried
+   tackling this huge monster. I did everything with these pictures. I re-sized,
+   converted, and processed these 1.4 million pictures. All to find out that I
+   didn't do it exactly how the api required it. If you'd like to see some of
+   these failed attempt files please send me an email.
+
+
+** Re-inventing the wheel
+
+   While I tried to do as the tensorflow page asked this process while
+   understandable was a waste of time. It was confusing and it focused more on
+   the technicalities. But when I found Keras it made things a lot easier and it
+   even shrunk the size of my code. Giving me more time to model building and
+   gathering data.
+
+** Learning takes time
+
+   I learned that even with a fancy computer deep learning/convolutional
+   learning just takes time. Since there are many layers to train and many gears
+   to ccrank this is just part of. And it fixed my incorrect understanding that
+   tensorflow would just make things faster and better. But it did make it
+   better with the original EMNIST paper we learn that back then they could only
+   get a 50% accuracy. But while doing this I got up to 95 percent. And that
+   took a while, 16 hours to exact.
+   
    

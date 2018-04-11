@@ -166,12 +166,44 @@ total = 1
 eval_batch_size = 512
 
 
+# for it in range(num_it):
+#     epoch = (it + 1)* total + weights_epoch
+#     print('\ncurrent iteration: ' + str(it) + '\ncurrent epoch: ' + str(epoch) +'\n')
+#
+#     for index,cur_model in enumerate(models):
+#         print('I am in the second loop')
+#         cur_model.model.optimizer.lr = 0.000001
+#
+#         trained = cur_model.model.fit_generator(all_batches,steps_per_epoch=steps, epochs=total, verbose=0,
+#                             validation_data=testing, validation_steps=val_steps)
+#         cur_model.model.save_weights("learning/weights/{:03d}epochs_weights_model_{}.pkl".format(epoch, index))
+#     all_preds = np.stack([m.model.predict(test, batch_size=eval_batch_size) for m in models])
+#     avg_preds = all_preds.mean(axis=0)
+#     test_error = (1 - keras.metrics.categorical_accuracy(test_labels, avg_preds).eval().mean()) * 100
+#
+#     with open("learning/history/test_errors_epoch_{:03d}.txt".format(epoch), "w") as text_file:
+#         print('i am in the third loop')
+#         text_file.write("epoch: {} test error on ensemble: {}\n".format(epoch, test_error))
+#         for m in models:
+#             pred = np.array(m.predict(test, batch_size=eval_batch_size))
+#             test_err = (1 - keras.metrics.categorical_accuracy(test_labels, pred).eval().mean()) * 100
+#             text_file.write("{}\n".format(test_err))
+
+
+# for presentation only use above code to really ensemble learn and get best prediction
+# from keras.utils import plot_model
+# plot_model(models[0].model, to_file='conv_model.png')
+# exit()
+
 models[0].model.optimizer.lr = 0.0001
 history = models[0].model.fit_generator(all_batches, steps_per_epoch=steps, epochs=4,
                    validation_data=testing, validation_steps=val_steps)
 pred = np.array(models[0].model.predict(test, batch_size=eval_batch_size))
 print("Test Error: " + str(1 - keras.metrics.categorical_accuracy(test_labels, pred).eval().mean() * 100))
 
+# all_preds = np.stack([m.model.predict(test, batch_size=eval_batch_size) for m in models])
+# avg_preds = all_preds.mean(axis=0)
+# print((1 - keras.metrics.categorical_accuracy(test_labels, avg_preds).eval().mean()) * 100)
 
 
 
