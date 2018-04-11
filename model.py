@@ -6,6 +6,8 @@ sess = tf.InteractiveSession()
 ############################OTHER_TOOLS###################################
 from scipy import io
 import numpy as np
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ###########################KERAS_API#####################################
 #   layers:
 #       -   Dense
@@ -37,7 +39,9 @@ K.set_image_dim_ordering('th')
 # datas = io.loadmat("./emnist-letters.mat")
 #######################################################################
 batch_size = 512
-
+print("\n\n\n#######################################################################")
+print("\n\nWelcome to the handwriting recognition project")
+print("\n\n\n#######################################################################")
 input_user = input("1. Letters 2. Numbers \n~----------> ")
 
 if input_user == 1:
@@ -144,12 +148,17 @@ class load_model():
 
 
 models = []
-weights_epoch = 0
+weights_epoch = 4
 # loads our model from past experiments
 for i in range(10):
     m = load_model()
     models.append(m)
+models = []
 
+for i in range(10):
+    m = load_model()
+    m.model.load_weights('learning/weights/{:03d}epochs_weights_model_{}.pkl'.format(weights_epoch, i))
+    models.append(m)
 num_it = 1
 total = 1
 
@@ -180,10 +189,13 @@ eval_batch_size = 512
 #             text_file.write("{}\n".format(test_err))
 #
 
-
+# for presentation only use above code to really ensemble learn and get best prediction
+# from keras.utils import plot_model
+# plot_model(models[0].model, to_file='conv_model.png')
+# exit()
 
 models[0].model.optimizer.lr = 0.0001
-history = models[0].model.fit_generator(all_batches, steps_per_epoch=steps, epochs=16,
+history = models[0].model.fit_generator(all_batches, steps_per_epoch=steps, epochs=4,
                    validation_data=testing, validation_steps=val_steps)
 pred = np.array(models[0].model.predict(test, batch_size=eval_batch_size))
 print(0, (1 - keras.metrics.categorical_accuracy(test_labels, pred).eval().mean()) * 100)
